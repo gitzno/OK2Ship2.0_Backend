@@ -1,0 +1,11 @@
+services:
+  db:
+    build: ./1.Database
+    container_name: sql_server_ok2Ship2.0
+    ports:
+      - "1433:1433"
+    environment:
+      - ACCEPT_EULA=Y
+      - MSSQL_SA_PASSWORD=${MSSQL_PASSWORD}
+      - MSSQL_PID=Express
+    restart: always
