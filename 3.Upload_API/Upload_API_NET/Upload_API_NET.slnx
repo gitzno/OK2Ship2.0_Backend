@@ -1,0 +1,5 @@
+<Solution>
+  <Project Path="API/API.csproj" />
+  <Project Path="Core/Core.csproj" />
+  <Project Path="S3_Repository/S3_Repository.csproj" Id="b8bed449-a95b-4995-8383-1f6d5d8874f3" />
+</Solution>

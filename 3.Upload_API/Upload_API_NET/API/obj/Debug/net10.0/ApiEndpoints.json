@@ -1,0 +1,18 @@
+[
+  {
+    "ContainingType": "API.Controllers.FolderController",
+    "Method": "getUploadURLs",
+    "RelativePath": "api/Folder/get-upload-urls",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "fileNames",
+        "Type": "System.Collections.Generic.List\u00601[[System.String, System.Private.CoreLib, Version=10.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  }
+]

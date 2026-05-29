@@ -1,0 +1,16 @@
+C:\Users\vietn\OneDrive\Desktop\thuyht\5.Ok2Ship2.0\3.Upload_API\Upload_API_NET\Minio_Repository\obj\Debug\net10.0\Minio_Repository.csproj.AssemblyReference.cache
+C:\Users\vietn\OneDrive\Desktop\thuyht\5.Ok2Ship2.0\3.Upload_API\Upload_API_NET\Minio_Repository\obj\Debug\net10.0\Minio_Repository.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\vietn\OneDrive\Desktop\thuyht\5.Ok2Ship2.0\3.Upload_API\Upload_API_NET\Minio_Repository\obj\Debug\net10.0\Minio_Repository.AssemblyInfoInputs.cache
+C:\Users\vietn\OneDrive\Desktop\thuyht\5.Ok2Ship2.0\3.Upload_API\Upload_API_NET\Minio_Repository\obj\Debug\net10.0\Minio_Repository.AssemblyInfo.cs
+C:\Users\vietn\OneDrive\Desktop\thuyht\5.Ok2Ship2.0\3.Upload_API\Upload_API_NET\Minio_Repository\obj\Debug\net10.0\Minio_Repository.csproj.CoreCompileInputs.cache
+C:\Users\vietn\OneDrive\Desktop\thuyht\5.Ok2Ship2.0\3.Upload_API\Upload_API_NET\Minio_Repository\obj\Debug\net10.0\Minio_Repository.sourcelink.json
+C:\Users\vietn\OneDrive\Desktop\thuyht\5.Ok2Ship2.0\3.Upload_API\Upload_API_NET\Minio_Repository\bin\Debug\net10.0\Minio_Repository.deps.json
+C:\Users\vietn\OneDrive\Desktop\thuyht\5.Ok2Ship2.0\3.Upload_API\Upload_API_NET\Minio_Repository\bin\Debug\net10.0\Minio_Repository.dll
+C:\Users\vietn\OneDrive\Desktop\thuyht\5.Ok2Ship2.0\3.Upload_API\Upload_API_NET\Minio_Repository\bin\Debug\net10.0\Minio_Repository.pdb
+C:\Users\vietn\OneDrive\Desktop\thuyht\5.Ok2Ship2.0\3.Upload_API\Upload_API_NET\Minio_Repository\bin\Debug\net10.0\Core.dll
+C:\Users\vietn\OneDrive\Desktop\thuyht\5.Ok2Ship2.0\3.Upload_API\Upload_API_NET\Minio_Repository\bin\Debug\net10.0\Core.pdb
+C:\Users\vietn\OneDrive\Desktop\thuyht\5.Ok2Ship2.0\3.Upload_API\Upload_API_NET\Minio_Repository\obj\Debug\net10.0\Minio_Re.B0404698.Up2Date
+C:\Users\vietn\OneDrive\Desktop\thuyht\5.Ok2Ship2.0\3.Upload_API\Upload_API_NET\Minio_Repository\obj\Debug\net10.0\Minio_Repository.dll
+C:\Users\vietn\OneDrive\Desktop\thuyht\5.Ok2Ship2.0\3.Upload_API\Upload_API_NET\Minio_Repository\obj\Debug\net10.0\refint\Minio_Repository.dll
+C:\Users\vietn\OneDrive\Desktop\thuyht\5.Ok2Ship2.0\3.Upload_API\Upload_API_NET\Minio_Repository\obj\Debug\net10.0\Minio_Repository.pdb
+C:\Users\vietn\OneDrive\Desktop\thuyht\5.Ok2Ship2.0\3.Upload_API\Upload_API_NET\Minio_Repository\obj\Debug\net10.0\ref\Minio_Repository.dll

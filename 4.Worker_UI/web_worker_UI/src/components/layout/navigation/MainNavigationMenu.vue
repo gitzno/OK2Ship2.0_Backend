@@ -1,28 +1,29 @@
 <template>
   <el-menu
-    default-active="2"
+    :default-active="$route.path"
+    router
     class="el-menu-vertical-demo"
     :collapse="stageMenu.state"
     @open="handleOpen"
     @close="handleClose"
   >
-    <el-menu-item index="1">
+    <el-menu-item index="/">
       <template #title>
         <el-icon><icon-menu /></el-icon>
         <span>Dashboard</span>
       </template>
     </el-menu-item>
-    <el-menu-item index="2">
+    <el-menu-item index="/upload">
       <el-icon><icon-menu /></el-icon>
-      <template #title>Upload Image</template>
+      <template #title>Upload Folder</template>
     </el-menu-item>
-    <el-menu-item index="3" disabled>
+    <el-menu-item index="/auth">
       <el-icon><document /></el-icon>
-      <template #title>Navigator Three</template>
+      <template #title>Auth</template>
     </el-menu-item>
-    <el-menu-item index="4">
-      <el-icon><setting /></el-icon>
-      <template #title>Navigator Four</template>
+    <el-menu-item index="/peel-test">
+      <el-icon><document /></el-icon>
+      <template #title>Peel Test</template>
     </el-menu-item>
   </el-menu>
 </template>

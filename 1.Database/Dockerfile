@@ -12,7 +12,9 @@ COPY . /usr/src/app
 RUN sed -i 's/\r$//' /usr/src/app/entrypoint.sh && \
     chmod +x /usr/src/app/entrypoint.sh
 
-# QUAN TRỌNG: Trả lại quyền cho user mssql (Best Practice về bảo mật của Microsoft)
+RUN chown -R 10001:0 /var/opt/mssql
+
+
 USER mssql
 
 # Chạy script khởi động

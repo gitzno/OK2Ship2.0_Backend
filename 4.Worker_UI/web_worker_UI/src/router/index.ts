@@ -1,6 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import MainLayout from '@/layouts/MainLayout.vue'
-import BlankLayout from '@/layouts/BlankLayout.vue'
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -14,7 +13,19 @@ const router = createRouter({
       path: '/auth',
       name: 'auth',
       component: () => import('@/views/guest/Auth.vue'),
-      meta: { layout: BlankLayout },
+      meta: { layout: MainLayout },
+    },
+    {
+      path: '/peel-test',
+      name: 'peeltest',
+      component: () => import('@/views/user/PeelTest.vue'),
+      meta: { layout: MainLayout },
+    },
+    {
+      path: '/upload',
+      name: 'upload',
+      component: () => import('@/views/user/UploadFolder.vue'),
+      meta: { layout: MainLayout },
     },
   ],
 })

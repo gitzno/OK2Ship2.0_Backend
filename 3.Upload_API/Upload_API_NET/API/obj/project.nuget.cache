@@ -1,0 +1,18 @@
+{
+  "version": 2,
+  "dgSpecHash": "FiagYK5bI0M=",
+  "success": true,
+  "projectFilePath": "C:\\Users\\vietn\\OneDrive\\Desktop\\thuyht\\5.Ok2Ship2.0\\3.Upload_API\\Upload_API_NET\\API\\API.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\vietn\\.nuget\\packages\\awssdk.core\\4.0.3.29\\awssdk.core.4.0.3.29.nupkg.sha512",
+    "C:\\Users\\vietn\\.nuget\\packages\\awssdk.s3\\4.0.21.1\\awssdk.s3.4.0.21.1.nupkg.sha512",
+    "C:\\Users\\vietn\\.nuget\\packages\\microsoft.extensions.apidescription.server\\10.0.0\\microsoft.extensions.apidescription.server.10.0.0.nupkg.sha512",
+    "C:\\Users\\vietn\\.nuget\\packages\\microsoft.openapi\\2.4.1\\microsoft.openapi.2.4.1.nupkg.sha512",
+    "C:\\Users\\vietn\\.nuget\\packages\\microsoft.visualstudio.azure.containers.tools.targets\\1.23.0\\microsoft.visualstudio.azure.containers.tools.targets.1.23.0.nupkg.sha512",
+    "C:\\Users\\vietn\\.nuget\\packages\\swashbuckle.aspnetcore\\10.1.7\\swashbuckle.aspnetcore.10.1.7.nupkg.sha512",
+    "C:\\Users\\vietn\\.nuget\\packages\\swashbuckle.aspnetcore.swagger\\10.1.7\\swashbuckle.aspnetcore.swagger.10.1.7.nupkg.sha512",
+    "C:\\Users\\vietn\\.nuget\\packages\\swashbuckle.aspnetcore.swaggergen\\10.1.7\\swashbuckle.aspnetcore.swaggergen.10.1.7.nupkg.sha512",
+    "C:\\Users\\vietn\\.nuget\\packages\\swashbuckle.aspnetcore.swaggerui\\10.1.7\\swashbuckle.aspnetcore.swaggerui.10.1.7.nupkg.sha512"
+  ],
+  "logs": []
+}

@@ -1,11 +1,5 @@
-FROM chrislusf/seaweedfs:latest
+# Sử dụng image chính thức từ MinIO
+FROM minio/minio:latest
 
-# Tạo thư mục cấu hình
-RUN mkdir -p /etc/seaweedfs
-
-# Copy file security vào (file này phải nằm cùng thư mục với Dockerfile)
-COPY security.toml /etc/seaweedfs/security.toml
-
-EXPOSE 9333 8080 8888 8333
-
-ENTRYPOINT ["/usr/bin/weed"]
+# Lệnh chạy mặc định (Sẽ được ghi đè hoặc bổ sung bởi docker-compose)
+ENTRYPOINT ["minio"]
