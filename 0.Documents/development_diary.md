@@ -1,5 +1,21 @@
 # Week 5:
 Xây dựng identity service with python
+- Sử dụng JWT Token để kiểm soát phiên đăng nhập.
+
+- Sử dụng cơ chế stamp để làm cơ chế refresh token, logout. 
+ => Không tách bảng thì chỉ đăng nhập trên 1 thiết bị duy nhất được
+
+- Thiết kế bảng thông tin người dùng: Linh hoạt thay đổi.
+
+- Thiết kế bảng phân quyền riêng để đa dụng trên nhiều quyền hạn khác nhau bảng role để chức danh
+
+Role (Vai trò)
+Permissions (Quyền hạn)
+
+Bảng trung gian 
+RolePermissions (1 Role có nhiều quyền)
+UserRoles ( 1 User có nhiều role)
+
 # Week 4:
 ## Worker_UI
 UI worker là phần mềm cho công nhân có thể truy cập thao tác với dữ liệu. Để việc đọc file excel có hiệu suất cao nên chỉ sử dụng epplus x asp.net. Vậy nên có hai phương án:

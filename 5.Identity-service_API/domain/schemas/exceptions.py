@@ -1,86 +1,91 @@
+from fastapi import status
+
+
 class DomainException(Exception):
-    def __init__(self, error_code: str, custom_message: str = None):
+    def __init__(self, error_code: str, status_code: int = 400):
+        self.user_msg = ERROR_MESSAGES[error_code]["user_message"]
+        self.dev_msg = ERROR_MESSAGES[error_code]["dev_message"]
         self.error_code = error_code
+        self.status_code = ERROR_MESSAGES[error_code]["status_code"]
+        super().__init__(self.user_msg)
 
-        error_info = ERROR_MESSAGES[error_code]
-
-        self.user_message = error_info["user_message"]
-
-        # Dev message gốc + nối thêm thông tin chi tiết động từ nơi ném lỗi (nếu có)
-        self.dev_message = error_info["dev_message"]
-        if custom_message:
-            self.dev_message += f" Details: {custom_message}"
-        super().__init__(self.dev_message)
 
 
 ERROR_MESSAGES = {
     "ACCOUNT_BANNED": {
-        "dev_message": "This account was banned",
-        "user_message": "Tài khoản của bạn đã bị cấm!"
+        "dev_message": "This account was banned by admin.",
+        "user_message": "Tài khoản của bạn đã bị cấm!",
+        "status_code": status.HTTP_403_FORBIDDEN # 403: Biết user là ai, nhưng cấm cửa không cho vào.
     },
 
     "ACCOUNT_DELETED": {
-        "dev_message": "This account was deleted",
-        "user_message": "Tài khoản của bạn không tồn tại!"
+        "dev_message": "This account was soft-deleted.",
+        "user_message": "Tài khoản của bạn không tồn tại hoặc đã bị xóa!",
+        "status_code": status.HTTP_404_NOT_FOUND # 404: Không tìm thấy tài nguyên.
     },
 
     "ACCOUNT_NOT_FOUND": {
-        "dev_message": "This account was not found",
-        "user_message": "Tài khoản của bạn không tồn tại!"
+        "dev_message": "This account was not found in the database.",
+        "user_message": "Tài khoản hoặc mật khẩu không chính xác!",
+        "status_code": status.HTTP_404_NOT_FOUND # 404: Không tìm thấy.
     },
 
     "PASSWORD_INCORRECT": {
-        "dev_message": "This account was not found",
-        "user_message": "Tài khoản của bạn không tồn tại!"
+        "dev_message": "Password hash mismatch.",
+        "user_message": "Tài khoản hoặc mật khẩu không chính xác!",
+        "status_code": status.HTTP_401_UNAUTHORIZED # 401: Sai thông tin xác thực.
     },
 
     "TOKEN_EXPIRED": {
-        "dev_message": "This session has expired",
-        "user_message": "Phiên đăng nhập hết hạn xin hãy đăng nhập lại!"
+        "dev_message": "This JWT session has expired.",
+        "user_message": "Phiên đăng nhập hết hạn, xin hãy đăng nhập lại!",
+        "status_code": status.HTTP_401_UNAUTHORIZED # 401: Lỗi liên quan đến xác thực danh tính.
     },
 
     "TOKEN_INVALID": {
-        "dev_message": "This token is invalid, Please confirm again",
-        "user_message": "Phiên đăng nhập hết hạn xin hãy đăng nhập lại!"
+        "dev_message": "This JWT token is malformed or invalid.",
+        "user_message": "Phiên đăng nhập không hợp lệ, xin hãy đăng nhập lại!",
+        "status_code": status.HTTP_401_UNAUTHORIZED # 401: Lỗi liên quan đến xác thực danh tính.
     },
 
     "USER_DUPLICATE": {
-        "dev_message": "This account is valid, Please confirm again",
-        "user_message": "Tài khoản này đã tồn tại"
+        "dev_message": "This account already exists in the database.",
+        "user_message": "Tài khoản này đã tồn tại trên hệ thống!",
+        "status_code": status.HTTP_409_CONFLICT # 409: Xung đột dữ liệu (Tạo mới nhưng bị trùng).
     },
 
     "ACCOUNT_VALIDATION": {
-        "dev_message": "Account not match with validation",
-        "user_message": "Tài khoản mật khẩu không phù hợp."
+        "dev_message": "Request payload failed regex validation.",
+        "user_message": "Tài khoản hoặc mật khẩu không đúng định dạng cho phép.",
+        "status_code": status.HTTP_422_UNPROCESSABLE_ENTITY # 422: Dữ liệu gửi lên đúng kiểu (string), nhưng sai định dạng (regex).
     }
 }
 
-
 class AccountBannerError(DomainException):
-    def __init__(self, custom_message: str = None):
-        super().__init__(error_code="ACCOUNT_BANNED", custom_message=custom_message)
+    def __init__(self, custom_message: str ):
+        super().__init__(error_code="ACCOUNT_BANNED")
 
 class AccountDeletedError(DomainException):
-    def __init__(self, custom_message: str = None):
-        super().__init__(error_code="ACCOUNT_DELETED", custom_message=custom_message)
+    def __init__(self, custom_message: str ):
+        super().__init__(error_code="ACCOUNT_DELETED")
 
 
 class AccountNotFoundError(DomainException):
-    def __init__(self, custom_message: str = None):
-        super().__init__(error_code="ACCOUNT_NOT_FOUND", custom_message=custom_message)
+    def __init__(self, custom_message: str ):
+        super().__init__(error_code="ACCOUNT_NOT_FOUND")
 
 class PasswordIncorrectError(DomainException):
-    def __init__(self, custom_message: str = None):
-        super().__init__(error_code="PASSWORD_INCORRECT", custom_message=custom_message)
+    def __init__(self, custom_message: str ):
+        super().__init__(error_code="PASSWORD_INCORRECT")
 
 class TokenExpiredError(DomainException):
-    def __init__(self, custom_message: str = None):
-        super().__init__(error_code="TOKEN_EXPIRED", custom_message=custom_message)
+    def __init__(self, custom_message: str ):
+        super().__init__(error_code="TOKEN_EXPIRED")
 
 class TokenInvalidError(DomainException):
-    def __init__(self, custom_message: str = None):
-        super().__init__(error_code="TOKEN_INVALID", custom_message=custom_message)
+    def __init__(self, custom_message: str ):
+        super().__init__(error_code="TOKEN_INVALID")
 
 class DuplicateAccountError(DomainException):
-    def __init__(self, custom_message: str = None):
-        super().__init__(error_code="USER_DUPLICATE", custom_message=custom_message)
+    def __init__(self, custom_message: str ):
+        super().__init__(error_code="USER_DUPLICATE")

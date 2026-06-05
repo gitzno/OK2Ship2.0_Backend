@@ -10,6 +10,14 @@ class LoginRequest(BaseModel):
     account: str
     password: str
 
+class UserResponse(BaseModel):
+    UserID: UUID
+    Username: str
+    UserStatus: str
+    EmployeeID: str
+    UserStatus: str
+
+
 class LoginResponse(BaseModel):
 
     UserID: UUID
@@ -31,7 +39,7 @@ class LoginResponse(BaseModel):
             case 4:
                 raise AccountDeletedError()
 
-        return False;
+        return False
 
 class RegisterRequest(BaseModel):
     Username: str

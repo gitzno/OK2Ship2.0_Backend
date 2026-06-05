@@ -1,10 +1,13 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, Depends
 
-from api.routes.v1 import auth_routes
+from api.dependencies.auth_deps import verify_global_token
+from api.routes.v1 import auth_routes, admin_routes
 
 api_v1_router = APIRouter(prefix="/v1")
 
 api_v1_router.include_router(auth_routes.router, prefix="/auth", tags=["auth"])
+api_v1_router.include_router(user_routes.router, prefix="/user", tags=["user"], dependencies=[Depends(verify_global_token)])
+
 
 router = APIRouter()
 

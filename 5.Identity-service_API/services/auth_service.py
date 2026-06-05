@@ -1,5 +1,6 @@
 import bcrypt
 
+from core.config import settings
 from domain.interfaces.repositories.i_user_repository import IUserRepository
 from domain.interfaces.services.i_auth_service import IAuthService
 from domain.interfaces.services.i_token_service import ITokenService
@@ -57,6 +58,18 @@ class AuthService(IAuthService):
         token = self.tokenService.generate_access_token(token_payload)
 
         return token
+
+    async def initADMIN(self) -> bool:
+        user = Users(
+            UserIDI = 0,
+            Username=settings.ADMIN_USERNAME,
+            PasswordHash=await self.__hash_password(settings.ADMIN_PASSWORD),
+            EmployeeID="ADMIN_TDMK",
+            UserStatus=1,  # pending
+        )
+        user = await self.user_repo.create_user(user)
+
+        return True
 
     async def register(self, request: RegisterRequest) -> Users:
 

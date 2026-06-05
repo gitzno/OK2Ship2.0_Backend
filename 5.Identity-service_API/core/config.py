@@ -30,5 +30,8 @@ class Settings(BaseSettings):
     JWT_ALGORITHM: str = "HS256"
     JWT_ACCESS_TOKEN_EXPIRE_MINUTES: int = 120
 
+    ADMIN_USERNAME: str = "ADMIN_USERNAME"
+    ADMIN_PASSWORD: str = "ADMIN_PASSWORD"
+
 
 settings = Settings()
