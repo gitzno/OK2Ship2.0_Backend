@@ -1,7 +1,11 @@
 from dependency_injector import containers, providers
+from redis.cache import CacheFactory
 
-from core.database import get_db_session, async_session
-from reponsitories.user_repository import UserRepository
+from core.UnitOfWork import UnitOfWork
+from core.config import settings
+from core.database import async_session
+from infrastructures.cache import redis_service
+from infrastructures.cache.redis_service import RedisService
 from services.auth_service import AuthService
 from services.token_service import TokenService
 
@@ -21,17 +25,23 @@ class Container(containers.DeclarativeContainer):
 
     providers.Resource: Chuyên dùng để quản lý các tài nguyên cần thao tác Đóng/Mở (như kết nối Database, File, Network). 
     """
-    session_factory = providers.Object(async_session)
+    session_factory = providers.Singleton(lambda: async_session)
 
     #Register Repository
-    user_repository = providers.Factory(
-        UserRepository,
-        session_factory=session_factory  # <--- SỬA DÒNG NÀY
+    uow = providers.Factory(
+        UnitOfWork,
+        session_factory=session_factory
     )
-
 
     #Register Service
     token_service = providers.Singleton(TokenService)
+    redis_service = providers.Singleton(RedisService, redis_url = settings.REDIS_URL)
 
-    auth_service = providers.Singleton(AuthService, user_repo=user_repository,
-        token_service=token_service)
+    auth_service = providers.Factory(
+        AuthService,
+        uow=uow,
+        token_service=token_service,
+        cache=redis_service
+    )
+
+

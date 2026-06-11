@@ -32,11 +32,7 @@ async def login(
         token = await auth_service.login(request)
 
         # 2. Nếu không có lỗi, trả về kết quả thành công
-        return LoginResponse(
-            access_token=token,
-            token_type="bearer",
-            message="Đăng nhập thành công!"
-        )
+        return HTTPException(status_code=status.HTTP_200_OK, detail=token)
 
     # 3. Bắt các lỗi Nghiệp vụ (Domain Exceptions) và dịch nó thành lỗi HTTP
     except AccountNotFoundError:

@@ -58,7 +58,32 @@ ERROR_MESSAGES = {
         "dev_message": "Request payload failed regex validation.",
         "user_message": "Tài khoản hoặc mật khẩu không đúng định dạng cho phép.",
         "status_code": status.HTTP_422_UNPROCESSABLE_ENTITY # 422: Dữ liệu gửi lên đúng kiểu (string), nhưng sai định dạng (regex).
-    }
+    },
+
+    "OK": {
+        "dev_message": "Get data successful.",
+        "user_message": "Lấy dữ liệu thành công",
+        "status_code": status.HTTP_200_OK
+    },
+
+    "OK_CREATE": {
+        "dev_message": "Create data successful.",
+        "user_message": "Tạo dữ liệu thành công",
+        "status_code": status.HTTP_201_CREATED
+    },
+
+    "OK_ACCEPTED": {
+        "dev_message": "Process is accepted",
+        "user_message": "Quá trình đã bắt đầu",
+            "status_code": status.HTTP_202_ACCEPTED
+    },
+
+    "OK_NOCONTENT": {
+        "dev_message": "Get data successful.",
+        "user_message": "Lấy dữ liệu thành công",
+        "status_code": status.HTTP_204_NO_CONTENT
+    },
+
 }
 
 class AccountBannerError(DomainException):

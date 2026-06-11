@@ -19,13 +19,14 @@ async def lifespan(app: FastAPI):
 
         await auth_service.initADMIN()
 
+        print("ADMIN khởi tạo thành công!")
     except DuplicateAccountError as e:
         print("ADMIN đã được khởi tạo")
     except Exception as e:
         print("Khởi tạo admin thất bại!")
 
     yield
-
+    await container.redis_service().close()
     print("🛑 Hệ thống đang tắt...")
 
 def create_app() -> FastAPI:

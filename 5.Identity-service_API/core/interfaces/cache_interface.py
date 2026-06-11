@@ -1,0 +1,9 @@
+from typing import Optional
+
+
+class ICacheService:
+    async def get(self, key: str) -> Optional[dict]:...
+    async def set(self, key: str, value: Optional[dict]) -> None:...
+    async def delete(self, key: str) -> None:...
+
+    

@@ -7,7 +7,7 @@ services:
         container_name: sql_server_ok2Ship2.0
         user: "0:0"
         ports:
-            - "1433:1433"
+            - "${DB_PORT}:1433" # Đã chuyển port ra .env
         environment:
             - ACCEPT_EULA=Y
             - MSSQL_SA_PASSWORD=${MSSQL_PASSWORD}
@@ -51,12 +51,13 @@ services:
             MINIO_ROOT_USER: ${MINIO_ROOT_USER_COLD}
             MINIO_ROOT_PASSWORD: ${MINIO_ROOT_PASSWORD_COLD}
         ports:
-            - "${MINIO_COLD_API_PORT}:9000" # SỬA: Map vào 9000 bên trong
-            - "${MINIO_COLD_CONSOLE_PORT}:9001" # SỬA: Map vào 9001 bên trong
+            - "${MINIO_COLD_API_PORT}:9000" 
+            - "${MINIO_COLD_CONSOLE_PORT}:9001" 
         volumes:
             - ${FOLDER_PATH_HDD}/data:/data
         command: server /data --console-address ":9001"
         restart: always
+
     # --- 4. TỰ ĐỘNG HÓA TOÀN BỘ (SETUP & POLICY) ---
     minio-setup:
         image: minio/mc:latest
@@ -73,15 +74,28 @@ services:
 
     # --- 5. ỨNG DỤNG BACKEND (API) ---
     api-upload-image:
-        container_name: api-upload-image # Tên container sẽ hiển thị khi chạy
+        container_name: api-upload-image
         build:
             context: ./3.Upload_API/Upload_API_NET           
             dockerfile: API/Dockerfile  
         ports:
-            - "5201:8080"               # Ánh xạ cổng: <Cổng ngoài máy tính>:<Cổng trong container>
+            - "${API_UPLOAD_PORT}:8080" # Đã chuyển port ra .env
         environment:
-            - ASPNETCORE_ENVIRONMENT=Development # Thiết lập môi trường chạy (Development/Production)
+            - ASPNETCORE_ENVIRONMENT=Development
         restart: unless-stopped
+
+    # --- 6. Redis service ---
+    redis_cache:
+        image: redis:7-alpine
+        container_name: ok2ship_redis
+        restart: always
+        ports:
+            - "${REDIS_PORT}:6379" # Đã chuyển port ra .env
+        command: redis-server --save 60 1 --loglevel warning
+        volumes:
+            - redis_data:/data
+
 volumes:
   mssql_data_volume:
   mssql_log_volume:
+  redis_data:

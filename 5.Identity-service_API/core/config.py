@@ -32,6 +32,6 @@ class Settings(BaseSettings):
 
     ADMIN_USERNAME: str = "ADMIN_USERNAME"
     ADMIN_PASSWORD: str = "ADMIN_PASSWORD"
-
+    REDIS_URL: str = "REDIS_URL"
 
 settings = Settings()

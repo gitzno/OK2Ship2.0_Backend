@@ -21,13 +21,7 @@ Trước đây chỉ tập chung vào giải quyết vấn đề trước mắt 
 
 Khởi tạo docker file
 ```
-docker-compose up --build -d
-```
-
-Gỡ docker compose
-
-```
-docker-compose down -v
+docker-compose down && docker-compose build --no-cache && docker-compose up
 ```
 
 ## Tính năng (Features):

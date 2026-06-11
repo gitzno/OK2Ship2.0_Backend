@@ -2,9 +2,9 @@ from typing import Optional
 import datetime
 import uuid
 
-from sqlalchemy import DateTime, Identity, Index, Integer, PrimaryKeyConstraint, String, Unicode, Uuid, text
+from sqlalchemy import Column, DateTime, ForeignKeyConstraint, Identity, Index, Integer, LargeBinary, PrimaryKeyConstraint, String, Table, Unicode, Uuid, text
 from sqlalchemy.dialects.mssql import DATETIME2, TINYINT
-from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
+from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column, relationship
 
 class Base(DeclarativeBase):
     pass
@@ -23,6 +23,35 @@ class PEELTESTNAS(Base):
     CreatedDate: Mapped[datetime.datetime] = mapped_column(DateTime, primary_key=True, server_default=text('(getdate())'))
     Data: Mapped[Optional[str]] = mapped_column(Unicode(collation='SQL_Latin1_General_CP1_CI_AS'))
     LocationImg: Mapped[Optional[str]] = mapped_column(Unicode(500, 'SQL_Latin1_General_CP1_CI_AS'))
+
+
+class Permissions(Base):
+    __tablename__ = 'Permissions'
+    __table_args__ = (
+        PrimaryKeyConstraint('PermissionID', name='PK__Permissi__EFA6FB0F881385C7'),
+        Index('UQ__Permissi__91FE575032914BC4', 'PermissionCode', mssql_clustered=False, unique=True)
+    )
+
+    PermissionID: Mapped[int] = mapped_column(Integer, Identity(start=1, increment=1), primary_key=True)
+    PermissionCode: Mapped[str] = mapped_column(String(100, 'SQL_Latin1_General_CP1_CI_AS'), nullable=False)
+    Description: Mapped[Optional[str]] = mapped_column(Unicode(255, 'SQL_Latin1_General_CP1_CI_AS'))
+
+    Roles: Mapped[list['Roles']] = relationship('Roles', secondary='RolePermissions', back_populates='Permissions_')
+
+
+class Roles(Base):
+    __tablename__ = 'Roles'
+    __table_args__ = (
+        PrimaryKeyConstraint('RoleID', name='PK__Roles__8AFACE3A56608D2C'),
+        Index('UQ__Roles__8A2B61609B69F152', 'RoleName', mssql_clustered=False, unique=True)
+    )
+
+    RoleID: Mapped[int] = mapped_column(Integer, Identity(start=1, increment=1), primary_key=True)
+    RoleName: Mapped[str] = mapped_column(String(50, 'SQL_Latin1_General_CP1_CI_AS'), nullable=False)
+    Description: Mapped[Optional[str]] = mapped_column(Unicode(255, 'SQL_Latin1_General_CP1_CI_AS'))
+
+    Permissions_: Mapped[list['Permissions']] = relationship('Permissions', secondary='RolePermissions', back_populates='Roles')
+    Users: Mapped[list['Users']] = relationship('Users', secondary='UserRoles', back_populates='Roles_')
 
 
 class Users(Base):
@@ -45,3 +74,39 @@ class Users(Base):
     LastModifiedDateTimeUTC: Mapped[datetime.datetime] = mapped_column(DATETIME2, nullable=False, server_default=text('(sysutcdatetime())'))
     LastLoginDateTimeUTC: Mapped[Optional[datetime.datetime]] = mapped_column(DATETIME2)
     LastLoginIpAddress: Mapped[Optional[str]] = mapped_column(String(45, 'SQL_Latin1_General_CP1_CI_AS'))
+
+    Roles_: Mapped[list['Roles']] = relationship('Roles', secondary='UserRoles', back_populates='Users')
+
+
+class Sysdiagrams(Base):
+    __tablename__ = 'sysdiagrams'
+    __table_args__ = (
+        PrimaryKeyConstraint('diagram_id', name='PK__sysdiagr__C2B05B610F47AE3E'),
+        Index('UK_principal_name', 'principal_id', 'name', mssql_clustered=False, unique=True)
+    )
+
+    name: Mapped[str] = mapped_column(Unicode(128, 'SQL_Latin1_General_CP1_CI_AS'), nullable=False)
+    principal_id: Mapped[int] = mapped_column(Integer, nullable=False)
+    diagram_id: Mapped[int] = mapped_column(Integer, Identity(start=1, increment=1), primary_key=True)
+    version: Mapped[Optional[int]] = mapped_column(Integer)
+    definition: Mapped[Optional[bytes]] = mapped_column(LargeBinary)
+
+
+t_RolePermissions = Table(
+    'RolePermissions', Base.metadata,
+    Column('RoleID', Integer, primary_key=True),
+    Column('PermissionID', Integer, primary_key=True),
+    ForeignKeyConstraint(['PermissionID'], ['Permissions.PermissionID'], ondelete='CASCADE', name='FK_RolePermissions_Permissions'),
+    ForeignKeyConstraint(['RoleID'], ['Roles.RoleID'], ondelete='CASCADE', name='FK_RolePermissions_Roles'),
+    PrimaryKeyConstraint('RoleID', 'PermissionID', name='PK_RolePermissions')
+)
+
+
+t_UserRoles = Table(
+    'UserRoles', Base.metadata,
+    Column('UserIDI', Integer, primary_key=True),
+    Column('RoleID', Integer, primary_key=True),
+    ForeignKeyConstraint(['RoleID'], ['Roles.RoleID'], ondelete='CASCADE', name='FK_UserRoles_Roles'),
+    ForeignKeyConstraint(['UserIDI'], ['Users.UserIDI'], ondelete='CASCADE', name='FK_UserRoles_Users'),
+    PrimaryKeyConstraint('UserIDI', 'RoleID', name='PK_UserRoles')
+)

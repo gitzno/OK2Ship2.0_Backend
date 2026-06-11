@@ -1,17 +1,19 @@
 import bcrypt
+from sqlalchemy.exc import IntegrityError
 
+from core.UnitOfWork import UnitOfWork
 from core.config import settings
-from domain.interfaces.repositories.i_user_repository import IUserRepository
+from core.interfaces.cache_interface import ICacheService
 from domain.interfaces.services.i_auth_service import IAuthService
 from domain.interfaces.services.i_token_service import ITokenService
 from domain.models.generated_models import Users
-from domain.schemas.exceptions import AccountNotFoundError, PasswordIncorrectError
+from domain.schemas.exceptions import AccountNotFoundError, PasswordIncorrectError, DuplicateAccountError
 from domain.schemas.user_dto import LoginRequest, RegisterRequest
 
 
 class AuthService(IAuthService):
-    def __init__(self, user_repo: IUserRepository, token_service: ITokenService):
-        self.user_repo = user_repo
+    def __init__(self, uow: UnitOfWork, token_service: ITokenService, cache: ICacheService):
+        self.uow = uow
         self.tokenService = token_service
 
     @staticmethod
@@ -31,44 +33,52 @@ class AuthService(IAuthService):
             raise Exception("Hashed password error")
 
     async def login(self, request : LoginRequest) -> str:
+        async with self.uow:
+            account = request.account
+            password = request.password
+            user = await self.uow.users.get_user_by_account(account)
 
-        account = request.account
-        password = request.password
-        user = await self.user_repo.get_user_by_account(account)
+            # Kiểm tra tài khoản có tồn tại hay không
+            if not user:
+                raise Exception("Account not found")
 
-        # Kiểm tra tài khoản có tồn tại hay không
-        if not user:
-            raise Exception("Account not found")
+            # Kiểm tra trạng thái tài khoản
+            if user.UserStatus != 1:
+                raise AccountNotFoundError()
 
-        # Kiểm tra trạng thái tài khoản
-        if user.UserStatus != 1:
-            raise AccountNotFoundError()
+            # So sánh mật khẩu
+            if not await self.__verify_password(password, user.PasswordHash):
+                raise PasswordIncorrectError()
 
-        # So sánh mật khẩu
-        if not await self.__verify_password(password, user.PasswordHash):
-            raise PasswordIncorrectError()
+            # Khởi tạo thông tin để cho vào token
+            token_payload = {
+                "sub": str(user.UserID),
+                "username": user.Username,
+            }
 
-        # Khởi tạo thông tin để cho vào token
-        token_payload = {
-            "sub": user.UserID,
-            "username": user.Username,
-        }
-
-        # Khởi tạo token
-        token = self.tokenService.generate_access_token(token_payload)
+            # Khởi tạo token
+            token = self.tokenService.generate_access_token(token_payload)
 
         return token
 
     async def initADMIN(self) -> bool:
-        user = Users(
-            UserIDI = 0,
-            Username=settings.ADMIN_USERNAME,
-            PasswordHash=await self.__hash_password(settings.ADMIN_PASSWORD),
-            EmployeeID="ADMIN_TDMK",
-            UserStatus=1,  # pending
-        )
-        user = await self.user_repo.create_user(user)
+        async with self.uow:
+            user = Users(
+                UserIDI = 0,
+                Username=settings.ADMIN_USERNAME,
+                PasswordHash=await self.__hash_password(settings.ADMIN_PASSWORD),
+                EmployeeID="ADMIN_TDMK",
+                UserStatus= 1,  # pending,
 
+            )
+            try:
+                user = await self.uow.users.create_user(user)
+            except DuplicateAccountError as e:
+                print("Tài khoản đã tồn tại trong hệ thống")
+            try:
+                await self.uow.users.set_role(user.UserIDI , 1)
+            except e:
+                print(f"{e}")
         return True
 
     async def register(self, request: RegisterRequest) -> Users:

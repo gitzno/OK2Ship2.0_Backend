@@ -1,11 +1,16 @@
 from abc import abstractmethod, ABC
 from typing import Optional
 
+from sqlalchemy.ext.mypy.util import fail
+
 from domain.models.generated_models import Users
+from domain.schemas.service_result import ServiceResult
 from domain.schemas.user_dto import LoginResponse
 
 
 class IUserRepository(ABC):
+
+
 
     @abstractmethod
     async def get_user_by_account(self, account: str) -> Optional[Users]:
