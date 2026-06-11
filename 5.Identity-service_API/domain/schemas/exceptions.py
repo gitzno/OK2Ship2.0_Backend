@@ -2,11 +2,16 @@ from fastapi import status
 
 
 class DomainException(Exception):
-    def __init__(self, error_code: str, status_code: int = 400):
-        self.user_msg = ERROR_MESSAGES[error_code]["user_message"]
+    def __init__(self, error_code: str, custom_message: str = None):
         self.dev_msg = ERROR_MESSAGES[error_code]["dev_message"]
         self.error_code = error_code
+        if custom_message is not None:
+            self.user_msg = ERROR_MESSAGES[error_code]["user_message"]
+        else:
+            self.user_msg = custom_message
+
         self.status_code = ERROR_MESSAGES[error_code]["status_code"]
+
         super().__init__(self.user_msg)
 
 
@@ -16,6 +21,12 @@ ERROR_MESSAGES = {
         "dev_message": "This account was banned by admin.",
         "user_message": "Tài khoản của bạn đã bị cấm!",
         "status_code": status.HTTP_403_FORBIDDEN # 403: Biết user là ai, nhưng cấm cửa không cho vào.
+    },
+
+    "ACCOUNT_NOT_VERIFY": {
+        "dev_message": "This account is not verified.",
+        "user_message": "Tài khoản của bạn chưa xác thực!",
+        "status_code": status.HTTP_403_FORBIDDEN
     },
 
     "ACCOUNT_DELETED": {
@@ -75,7 +86,7 @@ ERROR_MESSAGES = {
     "OK_ACCEPTED": {
         "dev_message": "Process is accepted",
         "user_message": "Quá trình đã bắt đầu",
-            "status_code": status.HTTP_202_ACCEPTED
+        "status_code": status.HTTP_202_ACCEPTED
     },
 
     "OK_NOCONTENT": {
@@ -85,32 +96,35 @@ ERROR_MESSAGES = {
     },
 
 }
+class AccountNotVerify(DomainException):
+    def __init__(self, custom_message: str = None ):
+        super().__init__(error_code="ACCOUNT_NOT_VERIFY", custom_message=custom_message)
 
 class AccountBannerError(DomainException):
-    def __init__(self, custom_message: str ):
-        super().__init__(error_code="ACCOUNT_BANNED")
+    def __init__(self, custom_message: str = None ):
+        super().__init__(error_code="ACCOUNT_BANNED", custom_message=custom_message)
 
 class AccountDeletedError(DomainException):
-    def __init__(self, custom_message: str ):
-        super().__init__(error_code="ACCOUNT_DELETED")
+    def __init__(self, custom_message: str = None ):
+        super().__init__(error_code="ACCOUNT_DELETED", custom_message=custom_message)
 
 
 class AccountNotFoundError(DomainException):
-    def __init__(self, custom_message: str ):
-        super().__init__(error_code="ACCOUNT_NOT_FOUND")
+    def __init__(self, custom_message: str = None ):
+        super().__init__(error_code="ACCOUNT_NOT_FOUND", custom_message=custom_message)
 
 class PasswordIncorrectError(DomainException):
-    def __init__(self, custom_message: str ):
-        super().__init__(error_code="PASSWORD_INCORRECT")
+    def __init__(self, custom_message: str = None ):
+        super().__init__(error_code="PASSWORD_INCORRECT", custom_message=custom_message)
 
 class TokenExpiredError(DomainException):
-    def __init__(self, custom_message: str ):
-        super().__init__(error_code="TOKEN_EXPIRED")
+    def __init__(self, custom_message: str = None):
+        super().__init__(error_code="TOKEN_EXPIRED", custom_message=custom_message)
 
 class TokenInvalidError(DomainException):
-    def __init__(self, custom_message: str ):
-        super().__init__(error_code="TOKEN_INVALID")
+    def __init__(self, custom_message: str = None ):
+        super().__init__(error_code="TOKEN_INVALID", custom_message=custom_message)
 
 class DuplicateAccountError(DomainException):
-    def __init__(self, custom_message: str ):
-        super().__init__(error_code="USER_DUPLICATE")
+    def __init__(self, custom_message: str = None ):
+        super().__init__(error_code="USER_DUPLICATE", custom_message=custom_message)

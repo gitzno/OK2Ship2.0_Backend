@@ -32,6 +32,12 @@ class Settings(BaseSettings):
 
     ADMIN_USERNAME: str = "ADMIN_USERNAME"
     ADMIN_PASSWORD: str = "ADMIN_PASSWORD"
-    REDIS_URL: str = "REDIS_URL"
+    REDIS_URL_PORT: str = "REDIS_URL_PORT"
+    REDIS_HOST: str = "localhost"
+    REDIS_DB: int = 0
+    @computed_field
+    @property
+    def REDIS_URL(self) -> str:
+        return f"redis://{self.REDIS_HOST}:{self.REDIS_URL_PORT}/{self.REDIS_DB}"
 
 settings = Settings()

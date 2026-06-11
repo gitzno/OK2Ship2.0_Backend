@@ -8,6 +8,8 @@ import traceback
 
 def app_global_exception_middleware(app: FastAPI):
 
+    
+
     @app.exception_handler(DomainException)
     async def domain_exception_handler(request: Request, exc: DomainException):
         # Tự động chuyển đổi Lỗi Nghiệp Vụ thành JSON chuẩn BaseApiResponse

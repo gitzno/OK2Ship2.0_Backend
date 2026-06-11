@@ -1,5 +1,6 @@
 from sqlalchemy.ext.asyncio import async_sessionmaker, AsyncSession
 
+from infrastructures.database.repositories.role_repository import RoleRepository
 from infrastructures.database.repositories.user_repository import UserRepository
 
 
@@ -12,7 +13,7 @@ class UnitOfWork:
         self.session = self._session_factory()
 
         self.users = UserRepository(self.session)
-
+        self.roles = RoleRepository(self.session)
         return self
 
     async def __aexit__(self, exc_type, exc_val, exc_tb):

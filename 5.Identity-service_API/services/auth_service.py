@@ -7,7 +7,9 @@ from core.interfaces.cache_interface import ICacheService
 from domain.interfaces.services.i_auth_service import IAuthService
 from domain.interfaces.services.i_token_service import ITokenService
 from domain.models.generated_models import Users
-from domain.schemas.exceptions import AccountNotFoundError, PasswordIncorrectError, DuplicateAccountError
+from domain.schemas.exceptions import AccountNotFoundError, PasswordIncorrectError, DuplicateAccountError, \
+    ERROR_MESSAGES
+from domain.schemas.service_result import ServiceResult
 from domain.schemas.user_dto import LoginRequest, RegisterRequest
 
 
@@ -15,6 +17,9 @@ class AuthService(IAuthService):
     def __init__(self, uow: UnitOfWork, token_service: ITokenService, cache: ICacheService):
         self.uow = uow
         self.tokenService = token_service
+        self.cache = cache
+
+
 
     @staticmethod
     async def __hash_password(password: str) -> str:
@@ -32,7 +37,7 @@ class AuthService(IAuthService):
         except Exception:
             raise Exception("Hashed password error")
 
-    async def login(self, request : LoginRequest) -> str:
+    async def login(self, request : LoginRequest) -> ServiceResult[str]:
         async with self.uow:
             account = request.account
             password = request.password
@@ -50,16 +55,21 @@ class AuthService(IAuthService):
             if not await self.__verify_password(password, user.PasswordHash):
                 raise PasswordIncorrectError()
 
+
+
             # Khởi tạo thông tin để cho vào token
             token_payload = {
                 "sub": str(user.UserID),
                 "username": user.Username,
+                "security_stamp" : str(user.SecurityStamp),
             }
+
+
 
             # Khởi tạo token
             token = self.tokenService.generate_access_token(token_payload)
 
-        return token
+        return ServiceResult(True ,token, "OK")
 
     async def initADMIN(self) -> bool:
         async with self.uow:
@@ -72,16 +82,20 @@ class AuthService(IAuthService):
 
             )
             try:
-                user = await self.uow.users.create_user(user)
-            except DuplicateAccountError as e:
-                print("Tài khoản đã tồn tại trong hệ thống")
-            try:
-                await self.uow.users.set_role(user.UserIDI , 1)
-            except e:
-                print(f"{e}")
+                try:
+                    user = await self.uow.users.create_user(user)
+                except DuplicateAccountError as e:
+                    print("Tài khoản đã tồn tại trong hệ thống")
+                try:
+                    await self.uow.roles.set_role(user.UserIDI , 1)
+                except DuplicateAccountError as e:
+                    print("Quyền đã tồn tại trong hệ thống")
+            except Exception as e:
+                print(f"Lỗi khi khởi tạo {e}")
+                return False
         return True
 
-    async def register(self, request: RegisterRequest) -> Users:
+    async def register(self, request: RegisterRequest) -> ServiceResult[str]:
 
         # Validate data
         if not request.validate_account():
@@ -96,7 +110,7 @@ class AuthService(IAuthService):
 
         user = await self.user_repo.create_user(user)
 
-        return user
+        return ServiceResult(True ,user, "OK")
 
 
 

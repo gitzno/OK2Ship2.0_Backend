@@ -1,5 +1,6 @@
 from abc import abstractmethod, ABC
 from typing import Optional
+from uuid import UUID
 
 from sqlalchemy.ext.mypy.util import fail
 
@@ -36,4 +37,15 @@ class IUserRepository(ABC):
         Returns:
             Optional[Users]: Trả về thông tin người dùng vừa tạo
         """
+
+    @abstractmethod
+    async def get_by_id(self, user_id: UUID) -> Optional[Users]:
+        """
+        Lấy thông tin đăng nhập người dùng bằng UUID định danh
+        :param user_id: user_id người dùng
+
+        :return:
+        User thông tin đăng nhập của người dùng
+        """
+        pass
 

@@ -6,22 +6,23 @@ from dependency_injector.wiring import inject, Provide
 
 from domain.interfaces.services.i_auth_service import IAuthService
 from domain.schemas.exceptions import AccountNotFoundError, PasswordIncorrectError
+from domain.schemas.service_result import ServiceResult
 from domain.schemas.user_dto import LoginRequest, LoginResponse, RegisterRequest
 
 router = APIRouter()
 
 
-@router.post("/register", response_model=RegisterRequest, tags=["auth"])
+@router.post("/register", tags=["auth"])
 @inject
 async def register(request: RegisterRequest,
                    auth_service: IAuthService = Depends(Provide[Container.auth_service])):
     try:
         token = await auth_service.register(request)
-        return token
+        return token.to_dict()
     except Exception as e:
         raise e
 
-@router.post("/login", response_model=LoginResponse, tags=["auth"])
+@router.post("/login", tags=["auth"])
 @inject
 async def login(
         request: LoginRequest,
@@ -29,10 +30,9 @@ async def login(
 ):
     try:
         # 1. Gọi thẳng vào hàm login của Service
-        token = await auth_service.login(request)
-
+        result = await auth_service.login(request)
         # 2. Nếu không có lỗi, trả về kết quả thành công
-        return HTTPException(status_code=status.HTTP_200_OK, detail=token)
+        return result.to_dict()
 
     # 3. Bắt các lỗi Nghiệp vụ (Domain Exceptions) và dịch nó thành lỗi HTTP
     except AccountNotFoundError:

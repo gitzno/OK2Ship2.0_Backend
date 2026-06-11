@@ -1,11 +1,14 @@
 from abc import ABC, abstractmethod
+
+from domain.models.generated_models import Users
+from domain.schemas.service_result import ServiceResult
 from domain.schemas.user_dto import LoginRequest, RegisterRequest
 
 
 class IAuthService(ABC):
 
     @abstractmethod
-    async def login(self, request: LoginRequest) -> str:
+    async def login(self, request: LoginRequest) -> ServiceResult[str]:
         """
         Xử lý nghiệp vụ đăng nhập của người dùng.
 
@@ -23,7 +26,7 @@ class IAuthService(ABC):
         pass
 
     @abstractmethod
-    async def register(self, request: RegisterRequest) -> str:
+    async def register(self, request: RegisterRequest) -> ServiceResult[Users]:
         """
         Xử lý nghiệp vụ đăng ký chủ động từ người dùng
 

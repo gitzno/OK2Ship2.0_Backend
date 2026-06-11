@@ -5,34 +5,30 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8c245fef-dcec-4a57-a584-91532b224ef6" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/core/interfaces/cache_interface.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/domain/interfaces/repositories/i_role_repository.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/infrastructures/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/infrastructures/cache/redis_service.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/infrastructures/database/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/infrastructures/database/repositories/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/infrastructures/database/repositories/role_repository.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/infrastructures/database/repositories/user_repository.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../1.Database/scripts/4.Role&amp;Permission.sql" beforeDir="false" afterPath="$PROJECT_DIR$/../1.Database/scripts/4.Role&amp;Permission.sql" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/core/providers.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/domain/interfaces/repositories/i_unit_of_work.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/infrastructures/connections.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1.Database/scripts/3.Users.sql" beforeDir="false" afterPath="$PROJECT_DIR$/../1.Database/scripts/3.Users.sql" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.env" beforeDir="false" afterPath="$PROJECT_DIR$/.env" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/dependencies/auth_deps.py" beforeDir="false" afterPath="$PROJECT_DIR$/api/dependencies/auth_deps.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/middlewares/exception_middlewares.py" beforeDir="false" afterPath="$PROJECT_DIR$/api/middlewares/exception_middlewares.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/api/routes/router_registration.py" beforeDir="false" afterPath="$PROJECT_DIR$/api/routes/router_registration.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/routes/v1/admin_routes.py" beforeDir="false" afterPath="$PROJECT_DIR$/api/routes/v1/admin_routes.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/api/routes/v1/auth_routes.py" beforeDir="false" afterPath="$PROJECT_DIR$/api/routes/v1/auth_routes.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/UnitOfWork.py" beforeDir="false" afterPath="$PROJECT_DIR$/core/UnitOfWork.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/core/config.py" beforeDir="false" afterPath="$PROJECT_DIR$/core/config.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/container.py" beforeDir="false" afterPath="$PROJECT_DIR$/core/container.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/database.py" beforeDir="false" afterPath="$PROJECT_DIR$/core/database.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/interfaces/cache_interface.py" beforeDir="false" afterPath="$PROJECT_DIR$/core/interfaces/cache_interface.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/domain/interfaces/repositories/i_user_repository.py" beforeDir="false" afterPath="$PROJECT_DIR$/domain/interfaces/repositories/i_user_repository.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/domain/interfaces/services/i_user_service.py" beforeDir="false" afterPath="$PROJECT_DIR$/domain/interfaces/services/i_user_service.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/domain/interfaces/services/i_auth_service.py" beforeDir="false" afterPath="$PROJECT_DIR$/domain/interfaces/services/i_auth_service.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/domain/models/generated_models.py" beforeDir="false" afterPath="$PROJECT_DIR$/domain/models/generated_models.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/domain/schemas/exceptions.py" beforeDir="false" afterPath="$PROJECT_DIR$/domain/schemas/exceptions.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/domain/schemas/service_result.py" beforeDir="false" afterPath="$PROJECT_DIR$/domain/schemas/service_result.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/infrastructures/cache/redis_service.py" beforeDir="false" afterPath="$PROJECT_DIR$/infrastructures/cache/redis_service.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/infrastructures/database/repositories/user_repository.py" beforeDir="false" afterPath="$PROJECT_DIR$/infrastructures/database/repositories/user_repository.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pyproject.toml" beforeDir="false" afterPath="$PROJECT_DIR$/pyproject.toml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/reponsitories/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/core/UnitOfWork.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/reponsitories/user_repository.py" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/services/auth_service.py" beforeDir="false" afterPath="$PROJECT_DIR$/services/auth_service.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/user_service.py" beforeDir="false" afterPath="$PROJECT_DIR$/services/user_service.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/uv.lock" beforeDir="false" afterPath="$PROJECT_DIR$/uv.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../readme.md" beforeDir="false" afterPath="$PROJECT_DIR$/../readme.md" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -51,61 +47,61 @@
   </component>
   <component name="NextEditCompletionFeaturesState">
     <decayedCancelled>
-      <entry key="MS100" value="1.4883951539766968E-59" />
-      <entry key="MS500" value="1.7161041812843843E-12" />
-      <entry key="S2" value="0.0011468415538130098" />
-      <entry key="S5" value="0.07487685430687764" />
-      <entry key="S10" value="0.38642379823457823" />
-      <entry key="S30" value="1.4422161897632861" />
-      <entry key="S60" value="2.2015011717543103" />
-      <entry key="M2" value="3.3767642487548226" />
-      <entry key="M5" value="6.493119471218232" />
-      <entry key="M10" value="13.713324057815038" />
-      <entry key="M15" value="23.323248493409206" />
-      <entry key="M30" value="55.24573777970634" />
-      <entry key="H1" value="123.26907573450345" />
-      <entry key="H2" value="252.55896721484592" />
-      <entry key="H4" value="437.3516682517438" />
-      <entry key="D1" value="847.3164943157171" />
-      <entry key="W1" value="977.3860455297148" />
-    </decayedCancelled>
-    <decayedSelected>
       <entry key="MS100" value="1.0" />
       <entry key="MS500" value="1.0" />
       <entry key="S2" value="1.0" />
       <entry key="S5" value="1.0" />
       <entry key="S10" value="1.0" />
-      <entry key="S30" value="1.000000000000953" />
-      <entry key="S60" value="1.000001061728643" />
-      <entry key="M2" value="1.0014523128058126" />
-      <entry key="M5" value="1.1669917417172504" />
-      <entry key="M10" value="2.018836015671031" />
-      <entry key="M15" value="3.0226582690128025" />
-      <entry key="M30" value="6.043768770462722" />
-      <entry key="H1" value="13.936338128549057" />
-      <entry key="H2" value="30.316250250023092" />
-      <entry key="H4" value="51.94207761886306" />
-      <entry key="D1" value="93.05904483251219" />
-      <entry key="W1" value="104.82455914548424" />
+      <entry key="S30" value="1.0000025891542295" />
+      <entry key="S60" value="1.0054023952975906" />
+      <entry key="M2" value="1.2659139804704862" />
+      <entry key="M5" value="4.760478654411534" />
+      <entry key="M10" value="13.797549210267093" />
+      <entry key="M15" value="23.075751283091375" />
+      <entry key="M30" value="54.753712669891556" />
+      <entry key="H1" value="122.94973818132253" />
+      <entry key="H2" value="233.15387978761802" />
+      <entry key="H4" value="423.9536524555871" />
+      <entry key="D1" value="1119.4477252009099" />
+      <entry key="W1" value="1416.876699086305" />
+    </decayedCancelled>
+    <decayedSelected>
+      <entry key="MS100" value="0.0" />
+      <entry key="MS500" value="0.0" />
+      <entry key="S2" value="1.2057087004720522E-99" />
+      <entry key="S5" value="2.7070556170849905E-40" />
+      <entry key="S10" value="1.6468317782208513E-20" />
+      <entry key="S30" value="2.9274826466701904E-7" />
+      <entry key="S60" value="7.815785579458964E-4" />
+      <entry key="M2" value="0.04832360890492904" />
+      <entry key="M5" value="0.8877535203120213" />
+      <entry key="M10" value="3.1863008531851715" />
+      <entry key="M15" value="5.307090614956995" />
+      <entry key="M30" value="10.347015299260779" />
+      <entry key="H1" value="17.56261685404422" />
+      <entry key="H2" value="28.059003341304127" />
+      <entry key="H4" value="48.22785302255197" />
+      <entry key="D1" value="122.02532416487264" />
+      <entry key="W1" value="152.0341902088441" />
     </decayedSelected>
     <decayedShown>
-      <entry key="MS100" value="9.111650307976635E-4" />
-      <entry key="MS500" value="0.24655817612333977" />
-      <entry key="S2" value="0.7046641152425035" />
-      <entry key="S5" value="0.8817946958093382" />
-      <entry key="S10" value="1.1241392270944046" />
-      <entry key="S30" value="2.1795387117758613" />
-      <entry key="S60" value="3.0207768371568258" />
-      <entry key="M2" value="4.2688065322920705" />
-      <entry key="M5" value="7.6054038586225925" />
-      <entry key="M10" value="15.695285648540583" />
-      <entry key="M15" value="26.314232201943316" />
-      <entry key="M30" value="61.261830978836564" />
-      <entry key="H1" value="137.17775734202948" />
-      <entry key="H2" value="282.84951168637497" />
-      <entry key="H4" value="489.2736853670091" />
-      <entry key="D1" value="940.3699208384716" />
-      <entry key="W1" value="1082.2097063408223" />
+      <entry key="MS100" value="0.08656934175693277" />
+      <entry key="MS500" value="0.6130174300265782" />
+      <entry key="S2" value="0.8848470468146135" />
+      <entry key="S5" value="0.952241889412658" />
+      <entry key="S10" value="0.9758288217780093" />
+      <entry key="S30" value="0.9918800051788385" />
+      <entry key="S60" value="1.0020960183402832" />
+      <entry key="M2" value="1.3116671424557524" />
+      <entry key="M5" value="5.643358996376752" />
+      <entry key="M10" value="16.975300646535448" />
+      <entry key="M15" value="28.372854214702553" />
+      <entry key="M30" value="65.0897122920854" />
+      <entry key="H1" value="140.50151149565193" />
+      <entry key="H2" value="261.202237991419" />
+      <entry key="H4" value="472.1699138231267" />
+      <entry key="D1" value="1241.4670381696283" />
+      <entry key="W1" value="1568.9097888679794" />
     </decayedShown>
   </component>
   <component name="ProjectColorInfo">{
@@ -122,7 +118,7 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
-    "FastAPI.AUTH.executor": "Run",
+    "FastAPI.AUTH.executor": "Debug",
     "ModuleVcsDetector.initialDetectionPerformed": "true",
     "Python.auth_routes.executor": "Run",
     "Python.user_dto.executor": "Run",
@@ -195,6 +191,7 @@
       <workItem from="1780976540611" duration="3297000" />
       <workItem from="1781064670537" duration="2991000" />
       <workItem from="1781073955571" duration="11172000" />
+      <workItem from="1781143817962" duration="21136000" />
     </task>
     <servers />
   </component>
@@ -216,9 +213,9 @@
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/services/auth_service.py</url>
-          <line>53</line>
-          <option name="timeStamp" value="14" />
+          <url>file://$PROJECT_DIR$/api/dependencies/auth_deps.py</url>
+          <line>23</line>
+          <option name="timeStamp" value="29" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
@@ -230,7 +227,7 @@
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/5_Identity_service_API$user_dto.coverage" NAME="user_dto Coverage Results" MODIFIED="1780478701142" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/domain/schemas" />
-    <SUITE FILE_PATH="coverage/5_Identity_service_API$AUTH.coverage" NAME="AUTH Coverage Results" MODIFIED="1781087267106" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
+    <SUITE FILE_PATH="coverage/5_Identity_service_API$AUTH.coverage" NAME="AUTH Coverage Results" MODIFIED="1781172863060" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
     <SUITE FILE_PATH="coverage/5_Identity_service_API$auth_routes.coverage" NAME="auth_routes Coverage Results" MODIFIED="1780478814186" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/api/routes/v1" />
   </component>
 </project>

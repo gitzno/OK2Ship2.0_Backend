@@ -5,25 +5,18 @@ from fastapi import FastAPI
 
 from api.middlewares.exception_middlewares import app_global_exception_middleware
 from api.routes import router_registration
-from api.routes.router_registration import api_v1_router
 from core.container import Container
-from domain.schemas.exceptions import DuplicateAccountError
-from services import auth_service
 
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     container = Container()
+
     try:
-        auth_service = container.auth_service()
-
-        await auth_service.initADMIN()
-
+        await container.auth_service().initADMIN()
         print("ADMIN khởi tạo thành công!")
-    except DuplicateAccountError as e:
-        print("ADMIN đã được khởi tạo")
     except Exception as e:
-        print("Khởi tạo admin thất bại!")
+        print(f"Khởi tạo admin thất bại! Lỗi: {e}")
 
     yield
     await container.redis_service().close()

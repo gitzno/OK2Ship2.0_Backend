@@ -1,4 +1,5 @@
 from typing import Optional
+from uuid import UUID
 
 from sqlalchemy import delete, insert
 from sqlalchemy.future import select
@@ -15,11 +16,15 @@ from domain.schemas.exceptions import DuplicateAccountError
 
 class UserRepository(IUserRepository):
 
+
+
     def __init__(self, session: AsyncSession):
         self.session = session
 
-
-
+    async def get_by_id(self, user_id: UUID) -> Optional[Users]:
+        stmt = select(Users).where(Users.UserID == user_id)
+        result = await self.session.execute(stmt)
+        return result.scalars().first()
 
     async def get_user_by_account(self, account: str) -> Optional[Users]:
         stmt = select(Users).filter(Users.Username == account)
@@ -44,6 +49,7 @@ class UserRepository(IUserRepository):
             # (Bạn nên thay bằng Custom Exception như DuplicateAccountError)
         except Exception as e:
             raise e
+
     async def get_user_by_id(self, user_id: int) -> Optional[Users]:
         stmt = select(Users).where(Users.UserID == user_id)
 

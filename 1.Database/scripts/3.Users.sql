@@ -12,7 +12,8 @@ create table dbo.Users(
 	EmployeeID VARCHAR(50) NOT NULL,
 	
 	PasswordHash VARCHAR(255) NOT NULL,
-	
+
+	[SecurityStamp] [uniqueidentifier] default  NEWID() NOT NULL,
 	-- User status
 	-- 1 Active, 2 Pending, 3 Suspended, 4 Deleted
 	UserStatus TINYINT default 1 NOT NULL,

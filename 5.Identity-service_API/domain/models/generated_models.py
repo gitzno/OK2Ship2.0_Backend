@@ -2,7 +2,7 @@ from typing import Optional
 import datetime
 import uuid
 
-from sqlalchemy import Column, DateTime, ForeignKeyConstraint, Identity, Index, Integer, LargeBinary, PrimaryKeyConstraint, String, Table, Unicode, Uuid, text
+from sqlalchemy import Column, DateTime, ForeignKeyConstraint, Identity, Index, Integer, PrimaryKeyConstraint, String, Table, Unicode, Uuid, text
 from sqlalchemy.dialects.mssql import DATETIME2, TINYINT
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column, relationship
 
@@ -28,8 +28,8 @@ class PEELTESTNAS(Base):
 class Permissions(Base):
     __tablename__ = 'Permissions'
     __table_args__ = (
-        PrimaryKeyConstraint('PermissionID', name='PK__Permissi__EFA6FB0F881385C7'),
-        Index('UQ__Permissi__91FE575032914BC4', 'PermissionCode', mssql_clustered=False, unique=True)
+        PrimaryKeyConstraint('PermissionID', name='PK__Permissi__EFA6FB0F98629239'),
+        Index('UQ__Permissi__91FE57503DD9CB62', 'PermissionCode', mssql_clustered=False, unique=True)
     )
 
     PermissionID: Mapped[int] = mapped_column(Integer, Identity(start=1, increment=1), primary_key=True)
@@ -42,8 +42,8 @@ class Permissions(Base):
 class Roles(Base):
     __tablename__ = 'Roles'
     __table_args__ = (
-        PrimaryKeyConstraint('RoleID', name='PK__Roles__8AFACE3A56608D2C'),
-        Index('UQ__Roles__8A2B61609B69F152', 'RoleName', mssql_clustered=False, unique=True)
+        PrimaryKeyConstraint('RoleID', name='PK__Roles__8AFACE3AE58C2679'),
+        Index('UQ__Roles__8A2B61606C90715F', 'RoleName', mssql_clustered=False, unique=True)
     )
 
     RoleID: Mapped[int] = mapped_column(Integer, Identity(start=1, increment=1), primary_key=True)
@@ -74,22 +74,9 @@ class Users(Base):
     LastModifiedDateTimeUTC: Mapped[datetime.datetime] = mapped_column(DATETIME2, nullable=False, server_default=text('(sysutcdatetime())'))
     LastLoginDateTimeUTC: Mapped[Optional[datetime.datetime]] = mapped_column(DATETIME2)
     LastLoginIpAddress: Mapped[Optional[str]] = mapped_column(String(45, 'SQL_Latin1_General_CP1_CI_AS'))
+    SecurityStamp: Mapped[Optional[uuid.UUID]] = mapped_column(Uuid, server_default=text('(newid())'))
 
     Roles_: Mapped[list['Roles']] = relationship('Roles', secondary='UserRoles', back_populates='Users')
-
-
-class Sysdiagrams(Base):
-    __tablename__ = 'sysdiagrams'
-    __table_args__ = (
-        PrimaryKeyConstraint('diagram_id', name='PK__sysdiagr__C2B05B610F47AE3E'),
-        Index('UK_principal_name', 'principal_id', 'name', mssql_clustered=False, unique=True)
-    )
-
-    name: Mapped[str] = mapped_column(Unicode(128, 'SQL_Latin1_General_CP1_CI_AS'), nullable=False)
-    principal_id: Mapped[int] = mapped_column(Integer, nullable=False)
-    diagram_id: Mapped[int] = mapped_column(Integer, Identity(start=1, increment=1), primary_key=True)
-    version: Mapped[Optional[int]] = mapped_column(Integer)
-    definition: Mapped[Optional[bytes]] = mapped_column(LargeBinary)
 
 
 t_RolePermissions = Table(

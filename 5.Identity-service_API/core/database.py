@@ -2,7 +2,7 @@ from sqlalchemy.ext.asyncio import create_async_engine, async_sessionmaker, Asyn
 from sqlalchemy.orm import DeclarativeBase
 from core.config import settings
 
-# CHUẨN: Gọi từ instance (s viết thường)
+# CHUẨN: Gọi từ instance
 engine = create_async_engine(settings.DATA_TABLE_URL, echo=True, pool_pre_ping=True)
 
 async_session = async_sessionmaker(bind=engine, class_=AsyncSession, expire_on_commit=False)
